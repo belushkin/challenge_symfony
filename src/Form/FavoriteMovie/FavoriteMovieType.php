@@ -2,13 +2,9 @@
 
 namespace App\Form\FavoriteMovie;
 
-use App\Entity\User;
+use App\Entity\Movie;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -20,52 +16,41 @@ class FavoriteMovieType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('favorite', CheckboxType::class)
-        ;
+        $chekedMovies   = [];
+        $selectedMovies = (!empty($options['selectedMovies']))  ? $options['selectedMovies']->toArray()     : [];
+        $movies         = (!empty($options['movies']))          ? $options['movies']                        : [];
 
-//        $builder
-//            ->add(
-//                'title',
-//                ChoiceType::class,
-//                [
-//                    'required' => true,
-//                    'choices'  => $this->getTitleChoices(),
-//                ]
-//            )
-//            ->add('name', TextType::class, ['required' => true])
-//            ->add('email', TextType::class, ['required' => true])
-//            ->add(
-//                'plainPassword',
-//                RepeatedType::class,
-//                [
-//                    'type'            => PasswordType::class,
-//                    'invalid_message' => 'validation.passwords.must.match',
-//                    'options'         => ['attr' => ['class' => 'password-field']],
-//                    'required'        => true,
-//                    'first_options'   => ['label' => 'Password'],
-//                    'second_options'  => ['label' => 'Password Repeat'],
-//                ]
-//            );
+        foreach ($movies as $movie) {
+            if (in_array($movie, $selectedMovies)) {
+                $chekedMovies[] = $movie;
+            }
+        }
+
+        $builder
+            ->add('favorite', ChoiceType::class, array(
+                'choices' => $options['movies'],
+                'choice_label' => false,
+                'choice_value' => function(Movie $movie) {
+                    return $movie->getId();
+                },
+                'data' => $chekedMovies,
+                'multiple' => true,
+                'expanded' => true,
+            ))
+        ;
     }
 
-//    /**
-//     * @param OptionsResolver $resolver
-//     */
-//    public function configureOptions(OptionsResolver $resolver)
-//    {
-//        $resolver->setDefaults(
-//            [
-//                'data_class' => User::class
-//            ]
-//        );
-//    }
-//
-//    private function getTitleChoices()
-//    {
-//        return [
-//            'mr' => User::TITLE_MR,
-//            'ms' => User::TITLE_MS
-//        ];
-//    }
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(
+            [
+                'movies' => 1,
+                'selectedMovies' => 1
+            ]
+        );
+    }
+
 }

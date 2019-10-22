@@ -413,8 +413,13 @@ class User implements UserInterface
         return $this;
     }
 
+    public function clearMovies()
+    {
+        $this->getMovieCollection()->clear();
+    }
+
     public function addMovie(Movie $movie)
     {
-        $this->genreCollection->add($movie);
+        $this->movieCollection->add($movie);
     }
 }

@@ -6,27 +6,37 @@
 
 {% block page_content %}
 
-    <table class="table">
-        <thead>
-        <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>Genres</th>
-        </tr>
-        </thead>
+    {{ form_start(form) }}
+        <table class="table">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Favorite</th>
+                <th>Name</th>
+                <th>Genres</th>
+            </tr>
+            </thead>
 
-        <tbody>
-        {% for movie in movies %}
-        <tr>
-            <td>{{ movie.id }}</td>
-            <td>{{ movie.title }}</td>
-            <td>
-                {% for genre in movie.genreCollection %}
-                    {{ genre.name }}{% if not loop.last %},{% endif %}
-                {% endfor %}
-            </td>
-        </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            <tbody>
+            {% for movie in movies %}
+            <tr>
+                <td>{{ movie.id }}</td>
+                <td>{{ form_widget(form.favorite[loop.index0]) }}</td>
+                <td>{{ movie.title }}</td>
+                <td>
+                    {% for genre in movie.genreCollection %}
+                        {{ genre.name }}{% if not loop.last %},{% endif %}
+                    {% endfor %}
+                </td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td></td>
+                <td><button id="submit-favorite" type="submit" class="btn btn-primary">Favorite</button></td>
+                <td></td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+    {{ form_end(form) }}
 {% endblock %}
