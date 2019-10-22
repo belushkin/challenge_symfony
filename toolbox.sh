@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 cd `dirname $0`
+if [ -z ${VOLUME_DIR+x} ]; then
+	export VOLUME_DIR=`pwd`
+fi
+
+export ECO_DOCKER_DIR=`pwd`
+export VOLUME_DIR="$ECO_DOCKER_DIR"
 
 CONTAINER_TOOLBOX_ID=`docker ps --format '{{.ID}}\t{{.Names}}' | grep challengesymfony_eco_1 | cut -f1`
 

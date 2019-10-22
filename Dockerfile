@@ -23,6 +23,9 @@ RUN docker-php-ext-enable apcu
 RUN wget https://get.symfony.com/cli/installer -O - | bash
 RUN mv /root/.symfony/bin/symfony /usr/local/bin/symfony
 
+# Memory Limit
+RUN echo "memory_limit=-1" > $PHP_INI_DIR/conf.d/memory-limit.ini
+
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');    \
     \$sig = file_get_contents('https://composer.github.io/installer.sig');      \
     if (trim(\$sig) === hash_file('SHA384', 'composer-setup.php')) exit(0);     \

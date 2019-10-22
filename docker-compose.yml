@@ -15,6 +15,9 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: eco
+    volumes:
+      - $VOLUME_DIR/data/volume/mysql:/var/lib/mysql
+      - $VOLUME_DIR/data/volume/logs/mysql:/var/log/mysql
 
   adminer:
     image: adminer

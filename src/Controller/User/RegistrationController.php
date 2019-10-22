@@ -5,12 +5,12 @@ namespace App\Controller\User;
 use App\Service\UserManager;
 use App\Entity\User;
 use App\Form\User\RegistrationType;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
-class RegistrationController extends Controller
+class RegistrationController extends AbstractController
 {
     /**
      * @Route("/register", name="app_register")
@@ -18,11 +18,8 @@ class RegistrationController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function createAction(Request $request)
+    public function createAction(Request $request, UserManager $userManager)
     {
-        /** @var UserManager $userManager */
-        $userManager = $this->get('backend.user.manager');
-
         $user = new User();
 
         $form = $this->createForm(RegistrationType::class, $user);

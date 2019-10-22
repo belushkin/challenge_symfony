@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -132,12 +133,19 @@ class User implements UserInterface
      */
     private $title = null;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Movie", cascade={"persist"})
+     * @ORM\JoinTable(name="user_movie")
+     */
+    protected $movieCollection;
 
     public function __construct()
     {
         $this->setRoles(['ROLE_USER']);
         $this->createdAt  = new \DateTime();
         $this->loginCount = 0;
+
+        $this->movieCollection = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -384,5 +392,29 @@ class User implements UserInterface
         $this->title = $title;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMovieCollection()
+    {
+        return $this->movieCollection;
+    }
+
+    /**
+     * @param mixed $movieCollection
+     * @return $this
+     */
+    public function setMovieCollection($movieCollection)
+    {
+        $this->movieCollection = $movieCollection;
+
+        return $this;
+    }
+
+    public function addMovie(Movie $movie)
+    {
+        $this->genreCollection->add($movie);
     }
 }

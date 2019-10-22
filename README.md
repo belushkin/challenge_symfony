@@ -32,6 +32,8 @@ create a new repository with the current code base. commit your changes and send
 
 
 
-/toolbox.sh exec php bin/console doctrine:schema:create
+./toolbox.sh exec php bin/console doctrine:schema:create
 ./toolbox.sh exec php bin/console doctrine:fixtures:load
 http://localhost:8080/ - adminer
+
+https://knplabs.com/en/blog/how-to-dockerise-a-symfony-4-project
