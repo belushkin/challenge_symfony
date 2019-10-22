@@ -50,8 +50,8 @@ Docker.io and docker-compose must be installed in the system in order to be able
 ## How to setup the application:
 
 ```php
-git clone https://github.com/belushkin/tmpr.git
-cd tmpr; ./toolbox.sh up
+git clone https://github.com/belushkin/challenge_symfony.git
+cd challenge_symfony; ./toolbox.sh up
 ./toolbox.sh exec php bin/console doctrine:schema:create
 ./toolbox.sh ssh
 php bin/console doctrine:fixtures:load [Y]
