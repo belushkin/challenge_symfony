@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block form_row -%}
+    <div class="form-group{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
+        {% if label is same as(false) %}
+            {{- form_widget(form) -}}
+        {% else %}
+            {{ form_widget(form, { 'attr': {'placeholder': label} }) }}
+
+            {% for attrName, attrValue in attr %}
+                {% if attrName == 'hint' %}
+                    <small>{{ attrValue|trans }}</small>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </div>
+{%- endblock form_row %}
+
+{% block title %}Create account{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+            <div class="ibox-title">
+                <h5>Create account</h5>
+                <div class="ibox-tools">
+                    <i class="fa fa-lock"></i>
+                </div>
+            </div>
+            <div class="ibox-content">
+
+                {{ form_start(form) }}
+
+                {{ form_errors(form) }}
+
+
+                {{ form_row(form.title) }}
+                {{ form_row(form.name) }}
+
+
+                {{ form_row(form.email) }}
+
+                {{ form_row(form.plainPassword) }}
+
+                <button id="submit-register" type="submit"
+                        class="btn btn-primary btn-block m-b">Create account</button>
+                {{ form_end(form) }}
+                <p class="text-muted text-center">
+                    <small>or</small>
+                </p>
+                <a href="{{ path('app_login') }}">Back to login</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

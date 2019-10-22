@@ -1,0 +1,32 @@
+{% extends 'layout/2-columns.html.twig' %}
+
+{% block title %}Movie list!{% endblock %}
+{% block page_title %}Movie list ({{ movies|length }}){% endblock %}
+
+
+{% block page_content %}
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Genres</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for movie in movies %}
+        <tr>
+            <td>{{ movie.id }}</td>
+            <td>{{ movie.title }}</td>
+            <td>
+                {% for genre in movie.genreCollection %}
+                    {{ genre.name }}{% if not loop.last %},{% endif %}
+                {% endfor %}
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

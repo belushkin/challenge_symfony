@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+    {% if app.user %}
+        <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+            <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Fav movies</a>
+            <ul class="navbar-nav px-3">
+                <li class="nav-item text-nowrap">
+                    <a class="nav-link" href="{{ path('app_logout') }}">Sign out</a>
+                </li>
+            </ul>
+        </nav>
+    {% endif %}
+    <div class="container-fluid">
+        {% block sidebar %}
+            <div class="row">
+                <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+                    <div class="sidebar-sticky">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#"><span>Home</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active"
+                                   href="{{ path('app_movie_list') }}"><span>Movie list</span></a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        {% endblock %}
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            {% block content %}
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+                    {% block page_header %}
+                        <h1 class="h2">{% block page_title %}{% endblock %}</h1>
+                        {% block page_toolbar %}
+                            <div class="btn-toolbar mb-2 mb-md-0">
+                                {% block page_toolbar_items %}
+
+                                {% endblock %}
+                            </div>
+                        {% endblock %}
+                    {% endblock %}
+
+                </div>
+                {% block page_content %}
+
+                {% endblock %}
+            {% endblock %}
+        </main>
+    </div>
+
+{% endblock %}
