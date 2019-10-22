@@ -28,6 +28,9 @@ services:
     # please note that last definitions always *replace* previous ones
 
 
+    App\EventListener\LoginListener:
+        tags:
+            - { name: 'kernel.event_listener', event: 'security.interactive_login' }
 
     App\EventListener\LocaleListener:
         arguments: ['%kernel.default_locale%']
