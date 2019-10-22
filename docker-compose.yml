@@ -6,3 +6,18 @@ services:
       - "8000:8000"
     volumes:
       - .:/app
+    links:
+      - eco-db-mysql
+
+  eco-db-mysql:
+    image: "mysql:5.7"
+    restart: on-failure
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: eco
+
+  adminer:
+    image: adminer
+    restart: on-failure
+    ports:
+      - "8080:8080"

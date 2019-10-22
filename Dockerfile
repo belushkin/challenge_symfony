@@ -8,12 +8,17 @@ VOLUME $APP_DIR
 RUN apt-get update && apt-get install -y \
         git \
         wget \
+        apt-utils \
         zlib1g-dev \
         libxml2-dev \
         zlib1g-dev \
         libzip-dev
 
+RUN pecl install apcu
+
 RUN docker-php-ext-install zip
+RUN docker-php-ext-install pdo_mysql
+RUN docker-php-ext-enable apcu
 
 RUN wget https://get.symfony.com/cli/installer -O - | bash
 RUN mv /root/.symfony/bin/symfony /usr/local/bin/symfony

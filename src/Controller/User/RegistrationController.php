@@ -34,6 +34,9 @@ class RegistrationController extends Controller
                 // set confirmation token
                 $userManager->updatePassword($user);
 
+                // Set Locale
+                $user->setLocale($request->getLocale());
+
                 // persist customer and user
                 $om = $this->getDoctrine()->getManager();
                 $om->persist($user);

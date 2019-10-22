@@ -21,6 +21,19 @@ function ssh_to()
   fi
 }
 
+function execute_arbitrary(){
+
+	if [ -t 1 ] ; then
+		docker exec -t -i $CONTAINER_TOOLBOX_ID $@
+		RET=$?
+	else
+		echo "$Name Warning: running in a non-interactive environment. Some features may not work"
+		docker exec $CONTAINER_TOOLBOX_ID $@
+		RET=$?
+	fi
+	return $RET
+}
+
 function command_boot()
 {
     # Start the developer environment
@@ -61,6 +74,11 @@ while (( "$#" )); do
   rebuild)
     command_rebuild;
     exit;
+    ;;
+  exec)
+    shift
+    execute_arbitrary $@
+    exit $?
     ;;
   down)
     shift
