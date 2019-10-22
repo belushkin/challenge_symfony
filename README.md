@@ -62,6 +62,11 @@ http://localhost:8000
 
 http://localhost:8080 (adminer)
 
+- server: eco-db-mysql
+- username: root
+- password: root
+- db: eco
+
 ## Basic script usage:
 
 Application has toolbox.sh script. It is very easy run, stop, ssh, rebuild, run tests and stop the application.
